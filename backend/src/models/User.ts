@@ -10,6 +10,7 @@ export interface IUser extends Document {
   city?: string;
   dob?: Date;
   phone?: string;
+  fDob?: string;
   mapFields(fields: string[]): any;
 }
 
@@ -23,6 +24,7 @@ const schema = new Schema(
       type: Schema.Types.String,
       required: true,
       trim: true,
+      unique: true,
     },
     city: {
       type: Schema.Types.String,

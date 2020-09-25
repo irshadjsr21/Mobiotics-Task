@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as moment from "moment";
+import * as createError from "http-errors";
 
 import User from "../../models/User";
 import { createUserValidator } from "../../validator/user";
@@ -40,11 +41,22 @@ export default {
 
       inputBody.dob = moment(rawDate, "DD/MM/YYYY", true);
 
-      const user = await User.create(inputBody);
+      let user;
+      try {
+        user = await User.create(inputBody);
+      } catch (error) {
+        if (error && error.code === 11000) {
+          throw createError(409, "Duplicate name.", {
+            errors: { name: "This name already exists." },
+          });
+        }
 
-      res
-        .status(201)
-        .json({ data: { ...user.mapFields(User.getProfileFields()), fDob: rawDate } });
+        throw error;
+      }
+
+      res.status(201).json({
+        data: { ...user.mapFields(User.getProfileFields()), fDob: rawDate },
+      });
     },
     {
       validation: {
