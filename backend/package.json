@@ -1,0 +1,59 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build",
+    "prebuild": "npm run lint",
+    "dev": "nodemon",
+    "build": "tsc",
+    "lint": "tslint 'src/**/*.ts'",
+    "format": "prettier --write src/**/*.ts src/*.ts",
+    "serve": "nodemon dist/index.js --watch dist",
+    "test": "echo \"No test is written\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.15.0",
+    "express-validator": "^6.6.1",
+    "helmet": "^3.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0",
+    "morgan": "^1.8.0",
+    "prettier": "^2.0.5",
+    "tslint-config-prettier": "^1.18.0",
+    "winston": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.0.35",
+    "@types/helmet": "^0.0.34",
+    "@types/http-errors": "^1.8.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.7.36",
+    "@types/morgan": "^1.7.0",
+    "@types/winston": "^2.3.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "nodemon": "^1.11.0",
+    "ts-node": "^8.10.2",
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "tslint"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
