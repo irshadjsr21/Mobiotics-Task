@@ -1,9 +1,13 @@
 import * as express from "express";
-import * as moment from "moment";
 import * as createError from "http-errors";
+import * as moment from "moment";
 
 import User from "../../models/User";
-import { createUserValidator, updateUserValidator } from "../../validator/user";
+import {
+  createUserValidator,
+  deleteUserValidator,
+  updateUserValidator,
+} from "../../validator/user";
 import createController from "../create";
 
 export default {
@@ -102,6 +106,28 @@ export default {
         throwError: true,
       },
       inputs: ["name", "city", "dob", "phone"],
+    }
+  ),
+
+  deleteUser: createController(
+    async (req: express.Request, res: express.Response) => {
+      const { id } = req.params;
+
+      const deletedData = await User.deleteOne({ _id: id });
+
+      if (deletedData.deletedCount <= 0) {
+        throw createError(404, "User does not exist.");
+      }
+
+      res.status(200).json({
+        message: "User deleted successfully.",
+      });
+    },
+    {
+      validation: {
+        validators: deleteUserValidator,
+        throwError: true,
+      },
     }
   ),
 };

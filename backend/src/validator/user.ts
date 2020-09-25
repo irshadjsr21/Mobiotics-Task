@@ -63,3 +63,7 @@ export const updateUserValidator = [
     .trim()
     .isMobilePhone("any", { strictMode: true }),
 ];
+
+export const deleteUserValidator = [
+  param("id", "Invalid user id.").isMongoId(),
+];
