@@ -3,7 +3,7 @@ import * as moment from "moment";
 import * as createError from "http-errors";
 
 import User from "../../models/User";
-import { createUserValidator } from "../../validator/user";
+import { createUserValidator, updateUserValidator } from "../../validator/user";
 import createController from "../create";
 
 export default {
@@ -61,6 +61,44 @@ export default {
     {
       validation: {
         validators: createUserValidator,
+        throwError: true,
+      },
+      inputs: ["name", "city", "dob", "phone"],
+    }
+  ),
+
+  updateUser: createController(
+    async (req: express.Request, res: express.Response) => {
+      const { inputBody } = res.locals;
+      const { id } = req.params;
+      const { dob: rawDate } = inputBody;
+
+      inputBody.dob = moment(rawDate, "DD/MM/YYYY", true);
+
+      let user;
+      try {
+        await User.updateOne({ _id: id }, inputBody);
+        user = await User.findById(id).select(User.getProfileFields());
+        if (!user) {
+          throw createError(404, "User does not exist.");
+        }
+      } catch (error) {
+        if (error && error.code === 11000) {
+          throw createError(409, "Duplicate name.", {
+            errors: { name: "This name already exists." },
+          });
+        }
+
+        throw error;
+      }
+
+      res.status(200).json({
+        data: user,
+      });
+    },
+    {
+      validation: {
+        validators: updateUserValidator,
         throwError: true,
       },
       inputs: ["name", "city", "dob", "phone"],
