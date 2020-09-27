@@ -67,7 +67,7 @@ export default {
         validators: createUserValidator,
         throwError: true,
       },
-      inputs: ["name", "city", "dob", "phone"],
+      inputs: ["name", "city", "country", "dob", "phone"],
     }
   ),
 

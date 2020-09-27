@@ -8,6 +8,7 @@ export interface IUser extends Document {
   id: string;
   name: string;
   city?: string;
+  country?: string;
   dob?: Date;
   phone?: string;
   fDob?: string;
@@ -27,6 +28,11 @@ const schema = new Schema(
       unique: true,
     },
     city: {
+      type: Schema.Types.String,
+      required: true,
+      trim: true,
+    },
+    country: {
       type: Schema.Types.String,
       required: true,
       trim: true,
@@ -63,7 +69,16 @@ schema.virtual("fDob").get(function () {
 });
 
 schema.statics.getProfileFields = function () {
-  return ["_id", "name", "city", "dob", "phone", "createdAt", "updatedAt"];
+  return [
+    "_id",
+    "name",
+    "city",
+    "country",
+    "dob",
+    "phone",
+    "createdAt",
+    "updatedAt",
+  ];
 };
 
 schema.methods.mapFields = function (fields: string[]) {

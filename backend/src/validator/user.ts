@@ -43,6 +43,10 @@ export const updateUserValidator = [
     .exists()
     .isString()
     .isLength({ min: 1 }),
+  body("country", "Please enter your country.")
+    .exists()
+    .isString()
+    .isLength({ min: 1 }),
   body("dob", "Date of Birth is required.")
     .trim()
     .isString()
