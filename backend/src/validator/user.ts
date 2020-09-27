@@ -31,6 +31,10 @@ export const createUserValidator = [
   body("phone", "Please enter a valid phone number.")
     .trim()
     .isMobilePhone("any", { strictMode: true }),
+  body("country", "Please enter your country.")
+    .exists()
+    .isString()
+    .isLength({ min: 1 }),
 ];
 
 export const updateUserValidator = [
