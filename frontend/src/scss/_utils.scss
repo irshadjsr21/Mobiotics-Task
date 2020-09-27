@@ -1,0 +1,232 @@
+@each $key, $value in $margin-sizes {
+  .m-#{$key} {
+    margin: $value;
+  }
+
+  .ml-#{$key} {
+    margin-left: $value;
+  }
+
+  .mr-#{$key} {
+    margin-right: $value;
+  }
+
+  .mb-#{$key} {
+    margin-bottom: $value;
+  }
+
+  .mt-#{$key} {
+    margin-top: $value;
+  }
+
+  .my-#{$key} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+
+  .mx-#{$key} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+}
+
+@each $key, $value in $padding-sizes {
+  .p-#{$key} {
+    padding: $value;
+  }
+
+  .pl-#{$key} {
+    padding-left: $value;
+  }
+
+  .pr-#{$key} {
+    padding-right: $value;
+  }
+
+  .pb-#{$key} {
+    padding-bottom: $value;
+  }
+
+  .pt-#{$key} {
+    padding-top: $value;
+  }
+
+  .py-#{$key} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+
+  .px-#{$key} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+}
+
+.btn-reset {
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  color: $text-color;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+/*
+  ========= Flex properties =========
+*/
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-space-between {
+  justify-content: space-between;
+}
+
+.justify-content-space-around {
+  justify-content: space-around;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-start {
+  align-items: flex-start;
+}
+
+/*
+  ========= Text properties =========
+*/
+
+.display-1 {
+  font-size: 4rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-small {
+  font-size: 0.8rem;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-medium {
+  font-weight: 500;
+}
+
+.text-primary {
+  color: $primary-color;
+}
+
+.text-danger {
+  color: $danger-color;
+}
+
+.text-mute {
+  opacity: 0.8;
+}
+
+.text-default {
+  color: $text-color;
+}
+
+/*
+  ========= Loader classes =========
+*/
+
+.loader {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  &::after {
+    content: "";
+    animation-name: loaderAnimation;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    width: 100px;
+    height: 100px;
+    border: 5px solid $grey-color;
+    border-top-color: $primary-color;
+    border-radius: 50%;
+  }
+
+  &.loader-lg {
+    &::after {
+      width: 150px;
+      height: 150px;
+      border-width: 8px;
+    }
+  }
+
+  &.loader-page {
+    margin: 100px 0;
+    &::after {
+      width: 180px;
+      height: 180px;
+      border-width: 10px;
+    }
+  }
+}
+
+@keyframes loaderAnimation {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+  ========= Display classes =========
+*/
+
+.d-none {
+  display: none;
+}
+
+/*
+  ========= Width and height =========
+*/
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}

@@ -1,0 +1,108 @@
+@import "../../scss/variables";
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0;
+  border: 1px solid #d9d9d9;
+  min-width: 500px;
+  border-radius: 5px;
+  background-color: #fff;
+
+  thead {
+    tr {
+      background-color: $text-color !important;
+      color: $text-light-color !important;
+      th {
+        font-weight: 500;
+        text-align: left;
+
+        button {
+          font-weight: 500;
+          font-size: 1rem;
+          color: $text-light-color;
+        }
+
+        &:first-child {
+          border-top-left-radius: 5px;
+        }
+
+        &:last-child {
+          border-top-right-radius: 5px;
+        }
+      }
+    }
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 20px;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-right: 20px;
+  }
+
+  td,
+  th {
+    padding: 15px;
+    min-width: 100px;
+  }
+
+  &.table-striped {
+    tr:nth-child(odd) {
+      background-color: $off-white-color;
+    }
+  }
+
+  &.table-clickable {
+    tr {
+      cursor: pointer;
+    }
+    tr:hover {
+      background-color: $off-white-color;
+    }
+  }
+
+  &.table-sortable {
+    th {
+      cursor: pointer;
+    }
+  }
+
+  &.table-loading {
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .table {
+    td,
+    th {
+      padding: 8px;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .table {
+    th:first-child,
+    td:first-child {
+      padding-left: 15px;
+    }
+
+    th:last-child,
+    td:last-child {
+      padding-right: 15px;
+    }
+
+    td,
+    th {
+      padding: 5px;
+    }
+  }
+}

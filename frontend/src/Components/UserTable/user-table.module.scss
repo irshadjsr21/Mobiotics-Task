@@ -1,0 +1,12 @@
+.user-table {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .user-table {
+    width: 100%;
+  }
+}

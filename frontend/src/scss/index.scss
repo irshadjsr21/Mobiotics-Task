@@ -1,0 +1,19 @@
+/* Imports */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap");
+@import "variables";
+@import "utils";
+
+/* Global HTML Tag formatting */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: $bg-color;
+  color: $text-color;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", serif;
+}
+

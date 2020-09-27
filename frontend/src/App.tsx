@@ -1,11 +1,13 @@
 import React from "react";
 
-import Header from "./Components/Header";
+import Header from "./Components/Header/Header";
+import UserTable from "./Components/UserTable/UserTable";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Header />
+      <UserTable />
     </div>
   );
 }
