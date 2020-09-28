@@ -28,6 +28,7 @@
       border-radius: 2px;
       box-shadow: $modal-shadow;
       transition: all $default-animation-time ease;
+      width: 600px;
 
       .modal-header {
         border-bottom: 1px solid $grey-darker-color;
@@ -47,16 +48,12 @@
   }
 }
 
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+@media (max-width: 768px) {
+  .modal-mask {
+    .modal-wrapper {
+      .modal-container {
+        width: 90%;
+      }
+    }
+  }
 }
