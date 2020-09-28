@@ -1,0 +1,74 @@
+@import "../../scss/variables";
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+
+  .input-label {
+    font-size: 1rem;
+  }
+
+  .input-box {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 1.1rem;
+    border: none;
+    box-shadow: $input-shadow;
+    margin: 0.3rem 0;
+    background-color: $text-light-color;
+
+    &:focus {
+      outline: 1px solid $primary-color;
+    }
+
+    &.input-box-invalid {
+      outline: 1px solid $danger-color;
+    }
+  }
+
+  .input-file {
+    display: none;
+  }
+
+  .input-file-btn {
+    width: fit-content;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: $grey-darker-color;
+    box-shadow: $btn-shadow;
+  }
+
+  &.input-container-row {
+    flex-direction: row;
+    align-items: center;
+    .input-label {
+      margin-right: 10px;
+    }
+  }
+
+  &.input-container-digit {
+    .input-box {
+      max-width: 50px;
+    }
+  }
+
+  &.input-container-sm {
+    .input-box {
+      max-width: 200px;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .input-container {
+    .input-box {
+      padding: 8px;
+    }
+  }
+}

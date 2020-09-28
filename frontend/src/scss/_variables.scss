@@ -1,12 +1,18 @@
 $bg-color: #f0f0f0;
 $text-color: #2e2e2e;
-$text-light-color: #f0f0f0;
+$text-light-color: #ffffff;
 $off-white-color: #f2f2f2;
 $danger-color: #c52b2b;
 $grey-color: #f2f2f2;
+$grey-darker-color: #d9d9d9;
 
 $primary-color: #4834df;
-$button-shadow: 1px 1px 1px 4px #cecece4f, 1px 1px 1px 1px #8a8a8a94;
+
+$btn-shadow: 1px 1px 1px 4px #cecece4f, 1px 1px 1px 1px #8a8a8a94;
+$modal-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+$input-shadow: 1px 2px 4px rgba(0, 0, 0, 0.17);
+
+$default-animation-time: 0.3s;
 
 $margin-sizes: (
   "auto": auto,

@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: $button-shadow;
+  box-shadow: $btn-shadow;
 
   @each $key, $value in $btn-types-color {
     &.btn-#{$key} {
@@ -21,4 +21,22 @@
       color: map-get($map: $value, $key: "color");
     }
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.btn.btn-simple {
+  box-shadow: none;
+}
+
+.btn.btn-lg {
+  padding: 15px 20px;
+  font-size: 1.4rem;
+}
+
+.btn.btn-sm {
+  padding: 10px 15px;
+  font-size: 1.1rem;
 }
