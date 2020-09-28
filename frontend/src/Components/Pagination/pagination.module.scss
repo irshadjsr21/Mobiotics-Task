@@ -1,0 +1,35 @@
+@import "../../scss/variables";
+
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .pagination-btn {
+    outline: none;
+    border: none;
+    background-color: $grey-color;
+    font-size: 1rem;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    &.pagination-btn-active {
+      background-color: $primary-color;
+      color: $text-light-color;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    .pagination-btn {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 /* tslint:disable:jsx-no-lambda */
-import React, { useState } from "react";
 import dayjs from "dayjs";
+import React, { useState } from "react";
 
 import User from "../../modal/User";
 import Table, { ColumnType } from "../Table/Table";
@@ -8,16 +8,27 @@ import styles from "./user-table.module.scss";
 
 import { deleteUser } from "../../services/user";
 
-import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import AddUserModal from "../AddUserModal/AddUserModal";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import Pagination from "../Pagination/Pagination";
 
 export interface UserTableProps {
   userList: User[];
   onDelete: (userId: string) => void;
   onEdit: (user: User) => void;
+  currentPage: number;
+  lastPage: number;
+  pageChange: (page: number) => void;
 }
 
-export default function UserTable({ userList, onDelete, onEdit }: UserTableProps) {
+export default function UserTable({
+  userList,
+  onDelete,
+  onEdit,
+  currentPage,
+  lastPage,
+  pageChange,
+}: UserTableProps) {
   const columns: ColumnType[] = [
     {
       name: "Name",
@@ -64,7 +75,7 @@ export default function UserTable({ userList, onDelete, onEdit }: UserTableProps
   };
 
   const sort = (column: ColumnType) => {
-    console.log(column);
+    // console.log(column);
   };
 
   const editUser = (user: User) => {
@@ -86,27 +97,39 @@ export default function UserTable({ userList, onDelete, onEdit }: UserTableProps
   };
 
   return (
-    <div className={`${styles["user-table"]} py-xl`}>
-      <Table columns={columns} isLoading={false} sort={sort} sortData={sortData}>
-        {userList.map((user) => (
-          <tr key={user._id}>
-            <td>{user.name}</td>
-            <td>{user.city}</td>
-            <td>{user.country}</td>
-            <td>{user.fDob}</td>
-            <td>{user.phone}</td>
-            <td>{dayjs(user.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
-            <td className="flex">
-              <button onClick={() => editUser(user)} className="btn-reset mr-2">
-                <i className="material-icons btn-icon">edit</i>
-              </button>
-              <button onClick={() => confirmDeleteUser(user._id)} className="btn-reset">
-                <i className="material-icons btn-icon">delete</i>
-              </button>
-            </td>
-          </tr>
-        ))}
-      </Table>
+    <div>
+      <div className={`${styles["user-table"]} py-xl`}>
+        <Table columns={columns} isLoading={false} sort={sort} sortData={sortData}>
+          {userList.map((user) => (
+            <tr key={user._id}>
+              <td>{user.name}</td>
+              <td>{user.city}</td>
+              <td>{user.country}</td>
+              <td>{user.fDob}</td>
+              <td>{user.phone}</td>
+              <td>{dayjs(user.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
+              <td className="flex">
+                <button onClick={() => editUser(user)} className="btn-reset mr-2">
+                  <i className="material-icons btn-icon">edit</i>
+                </button>
+                <button onClick={() => confirmDeleteUser(user._id)} className="btn-reset">
+                  <i className="material-icons btn-icon">delete</i>
+                </button>
+              </td>
+            </tr>
+          ))}
+        </Table>
+      </div>
+
+      <div>
+        <Pagination
+          disabled={false}
+          currentPage={currentPage}
+          lastPage={lastPage}
+          pageChange={pageChange}
+        />
+      </div>
+
       {deleteUserId ? (
         <ConfirmModal
           title="Delete User"

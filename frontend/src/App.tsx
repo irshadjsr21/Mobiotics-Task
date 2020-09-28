@@ -8,18 +8,23 @@ import { getUsers } from "./services/user";
 
 function App() {
   const [userList, setUserList] = useState<User[]>([]);
+  const [pageData, setPageData] = useState<{ currentPage: number; lastPage: number }>({
+    currentPage: 1,
+    lastPage: 1,
+  });
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (page: number) => {
     try {
-      const resp = await getUsers({});
+      const resp = await getUsers({ page });
       setUserList(resp.data as User[]);
+      setPageData({ currentPage: page, lastPage: resp.lastPage });
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchUsers(pageData.currentPage);
   }, []);
 
   const onAdd = (user: User) => {
@@ -42,7 +47,14 @@ function App() {
   return (
     <div>
       <Header onAdd={onAdd} />
-      <UserTable onEdit={onEdit} onDelete={onDelete} userList={userList} />
+      <UserTable
+        currentPage={pageData.currentPage}
+        lastPage={pageData.lastPage}
+        pageChange={fetchUsers}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        userList={userList}
+      />
     </div>
   );
 }

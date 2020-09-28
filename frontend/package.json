@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "tslint src/**/*.ts",
+    "lint": "tslint src/**/*.tsx src/**/*.ts src/*.tsx src/*.ts",
     "format": "prettier --write src/**/*.ts* src/*.ts*"
   },
   "eslintConfig": {
@@ -59,7 +59,7 @@
     }
   },
   "lint-staged": {
-    "*.ts": [
+    "*.tsx|*.ts": [
       "prettier --write",
       "tslint"
     ]
