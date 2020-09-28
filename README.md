@@ -26,6 +26,12 @@ cd backend
 npm install
 ```
 
+
+- If on windows, Install nodemon globally
+```
+npm install -g nodemon
+```
+
 - Create a `.env` file from `.env.example` file
 
 - Start the mongoDB server (if not already started).
@@ -40,7 +46,7 @@ npm run serve
 
 ### Frontend
 
-- Go to the frontend dir
+- Open a new terminal & go to the frontend dir
 ```
 cd frontend
 ```
