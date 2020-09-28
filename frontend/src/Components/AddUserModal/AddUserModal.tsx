@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import dayjs from "dayjs";
 
 import Button, { ButtonProps } from "../Button/Button";
 import InputBox from "../InputBox/InputBox";
 import Modal from "../Modal/Modal";
+import DatePicker from "../DatePicker/DatePicker";
 
 import styles from "./add-user-modal.module.scss";
 import User from "../../modal/User";
 
 import { createUser } from "../../services/user";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export interface AddUserModalProps {
   onClose: () => void;
@@ -20,7 +24,7 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
     city: "",
     country: "",
     phone: "",
-    dob: "",
+    dob: new Date(),
   };
   const initialErrors = {
     name: "",
@@ -36,14 +40,24 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
   const [errors, setErrors] = useState(initialErrors);
   const [fatalError, setFatalError] = useState("");
 
-  const handleInput = (key: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [key]: event.target.value });
+  const handleInput = (key: string, value: string) => {
+    setValues({ ...values, [key]: value });
+  };
+
+  const setDate = (date: any) => {
+    console.log(date);
+    setValues({ ...values, dob: date });
   };
 
   const callCreateUser = async () => {
     try {
       setIsLoading(true);
-      const resp = await createUser(values);
+      let formattedDate = "";
+      if (values.dob) {
+        formattedDate = dayjs(values.dob).format("DD/MM/YYYY");
+      }
+      const body = { ...values, dob: formattedDate };
+      const resp = await createUser(body);
       console.log(resp);
       onAdd(resp.data as User);
     } catch (error) {
@@ -58,7 +72,6 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
 
   const handleSubmit: ButtonProps["onClick"] = (event) => {
     event.preventDefault();
-    console.log(values);
     callCreateUser();
   };
 
@@ -73,34 +86,7 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
             name="name"
             error={errors.name}
             value={values.name}
-            handleInput={(event) => handleInput("name", event)}
-          />
-          <InputBox
-            className="mx-auto mb-l"
-            type="text"
-            label="City"
-            name="city"
-            error={errors.city}
-            value={values.city}
-            handleInput={(event) => handleInput("city", event)}
-          />
-          <InputBox
-            className="mx-auto mb-l"
-            type="text"
-            label="Country"
-            name="country"
-            error={errors.country}
-            value={values.country}
-            handleInput={(event) => handleInput("country", event)}
-          />
-          <InputBox
-            className="mx-auto mb-l"
-            type="text"
-            label="Date of Birth"
-            name="dob"
-            error={errors.dob}
-            value={values.dob}
-            handleInput={(event) => handleInput("dob", event)}
+            handleInput={(event) => handleInput("name", event.target.value)}
           />
           <InputBox
             className="mx-auto mb-l"
@@ -109,7 +95,31 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
             name="phone"
             error={errors.phone}
             value={values.phone}
-            handleInput={(event) => handleInput("phone", event)}
+            handleInput={(event) => handleInput("phone", event.target.value)}
+          />
+          <InputBox
+            className="mx-auto mb-l"
+            type="text"
+            label="City"
+            name="city"
+            error={errors.city}
+            value={values.city}
+            handleInput={(event) => handleInput("city", event.target.value)}
+          />
+          <InputBox
+            className="mx-auto mb-l"
+            type="text"
+            label="Country"
+            name="country"
+            error={errors.country}
+            value={values.country}
+            handleInput={(event) => handleInput("country", event.target.value)}
+          />
+          <DatePicker
+            error={errors.dob}
+            label="Date of Birth"
+            value={values.dob}
+            handleInput={setDate}
           />
           {errors && errors.default ? (
             <small className="text-danger" v-if="errors && errors.default">

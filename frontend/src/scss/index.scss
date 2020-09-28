@@ -17,3 +17,40 @@ h4 {
   font-family: "Playfair Display", serif;
 }
 
+.react-datepicker__input-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+
+  .input-label {
+    font-size: 1rem;
+  }
+
+  input {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 1.1rem;
+    border: none;
+    box-shadow: $input-shadow;
+    margin: 0.3rem 0;
+    background-color: $text-light-color;
+
+    &:focus {
+      outline: 1px solid $primary-color;
+    }
+
+    &.input-box-invalid {
+      outline: 1px solid $danger-color;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .react-datepicker__input-container {
+    input {
+      padding: 8px;
+    }
+  }
+}
