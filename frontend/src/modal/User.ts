@@ -3,6 +3,7 @@ export default interface User {
   name: string;
   city: string;
   country: string;
+  dob: string;
   fDob: string;
   phone: string;
   createdAt: string;

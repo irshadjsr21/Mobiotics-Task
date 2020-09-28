@@ -21,15 +21,17 @@ export default function Button({
   disabled = false,
   isLarge = false,
 }: ButtonProps) {
-
   let btnClass = "";
   switch (theme) {
     case "primary":
       btnClass = styles["btn-primary"];
+      break;
+    case "danger":
+      btnClass = styles["btn-danger"];
   }
 
-  if(isLarge) {
-    btnClass += ` ${styles["btn-lg"]}`
+  if (isLarge) {
+    btnClass += ` ${styles["btn-lg"]}`;
   }
 
   return (

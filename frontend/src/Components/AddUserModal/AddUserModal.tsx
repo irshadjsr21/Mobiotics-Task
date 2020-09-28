@@ -1,24 +1,26 @@
-import React, { useState } from "react";
 import dayjs from "dayjs";
+import React, { useState, useEffect } from "react";
 
 import Button, { ButtonProps } from "../Button/Button";
+import DatePicker from "../DatePicker/DatePicker";
 import InputBox from "../InputBox/InputBox";
 import Modal from "../Modal/Modal";
-import DatePicker from "../DatePicker/DatePicker";
 
-import styles from "./add-user-modal.module.scss";
 import User from "../../modal/User";
+import styles from "./add-user-modal.module.scss";
 
-import { createUser } from "../../services/user";
+import { createUser, updateUser } from "../../services/user";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 export interface AddUserModalProps {
   onClose: () => void;
-  onAdd: (user: User) => void;
+  onAdd: (user: User, isNew: boolean) => void;
+  isEditing: boolean;
+  user?: User;
 }
 
-export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
+export default function AddUserModal({ onClose, onAdd, user, isEditing }: AddUserModalProps) {
   const initialValues = {
     name: "",
     city: "",
@@ -26,6 +28,21 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
     phone: "",
     dob: new Date(),
   };
+
+  useEffect(() => {
+    if (isEditing && user) {
+      const newValues = {
+        name: user.name,
+        city: user.city,
+        country: user.country,
+        phone: user.phone,
+        dob: new Date(user.dob),
+      };
+      setValues(newValues);
+      console.log(newValues);
+    }
+  }, [user, isEditing]);
+
   const initialErrors = {
     name: "",
     city: "",
@@ -38,7 +55,6 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
   const [values, setValues] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState(initialErrors);
-  const [fatalError, setFatalError] = useState("");
 
   const handleInput = (key: string, value: string) => {
     setValues({ ...values, [key]: value });
@@ -57,9 +73,13 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
         formattedDate = dayjs(values.dob).format("DD/MM/YYYY");
       }
       const body = { ...values, dob: formattedDate };
-      const resp = await createUser(body);
-      console.log(resp);
-      onAdd(resp.data as User);
+      if (isEditing && user) {
+        const resp = await updateUser(user._id, body);
+        onAdd(resp.data as User, false);
+      } else {
+        const resp = await createUser(body);
+        onAdd(resp.data as User, true);
+      }
     } catch (error) {
       if (error.data) {
         setErrors(error.data);
@@ -132,7 +152,7 @@ export default function AddUserModal({ onClose, onAdd }: AddUserModalProps) {
               isLarge={true}
               theme="primary"
               onClick={handleSubmit}
-              disabled={isLoading || !!fatalError}
+              disabled={isLoading}
             >
               Submit
             </Button>

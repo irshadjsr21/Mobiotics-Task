@@ -1,16 +1,23 @@
 /* tslint:disable:jsx-no-lambda */
-import React from "react";
+import React, { useState } from "react";
+import dayjs from "dayjs";
 
+import User from "../../modal/User";
+import Table, { ColumnType } from "../Table/Table";
 import styles from "./user-table.module.scss";
 
-import Table, { ColumnType } from "../Table/Table";
-import User from "../../modal/User";
+import { deleteUser } from "../../services/user";
+
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import AddUserModal from "../AddUserModal/AddUserModal";
 
 export interface UserTableProps {
   userList: User[];
+  onDelete: (userId: string) => void;
+  onEdit: (user: User) => void;
 }
 
-export default function UserTable({ userList }: UserTableProps) {
+export default function UserTable({ userList, onDelete, onEdit }: UserTableProps) {
   const columns: ColumnType[] = [
     {
       name: "Name",
@@ -48,6 +55,9 @@ export default function UserTable({ userList }: UserTableProps) {
     },
   ];
 
+  const [deleteUserId, setDeleteUserId] = useState<string>("");
+  const [editUserObj, setEditUserObj] = useState<User | null>(null);
+
   const sortData = {
     column: undefined,
     asc: true,
@@ -57,12 +67,22 @@ export default function UserTable({ userList }: UserTableProps) {
     console.log(column);
   };
 
-  const editUser = (userId: string) => {
-    console.log(userId);
+  const editUser = (user: User) => {
+    setEditUserObj(user);
   };
 
-  const deleteUser = (userId: string) => {
-    console.log(userId);
+  const confirmDeleteUser = (userId: string) => {
+    setDeleteUserId(userId);
+  };
+
+  const callDeleteUser = async () => {
+    try {
+      await deleteUser(deleteUserId);
+      onDelete(deleteUserId);
+      setDeleteUserId("");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -75,18 +95,39 @@ export default function UserTable({ userList }: UserTableProps) {
             <td>{user.country}</td>
             <td>{user.fDob}</td>
             <td>{user.phone}</td>
-            <td>{user.createdAt}</td>
+            <td>{dayjs(user.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
             <td className="flex">
-              <button onClick={() => editUser(user._id)} className="btn-reset mr-2">
+              <button onClick={() => editUser(user)} className="btn-reset mr-2">
                 <i className="material-icons btn-icon">edit</i>
               </button>
-              <button onClick={() => deleteUser(user._id)} className="btn-reset">
+              <button onClick={() => confirmDeleteUser(user._id)} className="btn-reset">
                 <i className="material-icons btn-icon">delete</i>
               </button>
             </td>
           </tr>
         ))}
       </Table>
+      {deleteUserId ? (
+        <ConfirmModal
+          title="Delete User"
+          onClose={() => setDeleteUserId("")}
+          onConfirm={callDeleteUser}
+        >
+          Are you sure you want to delete this user?
+        </ConfirmModal>
+      ) : null}
+
+      {editUserObj ? (
+        <AddUserModal
+          onAdd={(user) => {
+            onEdit(user);
+            setEditUserObj(null);
+          }}
+          user={editUserObj}
+          onClose={() => setEditUserObj(null)}
+          isEditing={true}
+        />
+      ) : null}
     </div>
   );
 }

@@ -45,3 +45,32 @@ export const createUser = (body: {
       reject(error);
     }
   });
+
+export const updateUser = (
+  userId: string,
+  body: {
+    name: string;
+    city: string;
+    country: string;
+    dob: string;
+    phone: string;
+  }
+): Promise<ResponseType> =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const resp = await http.patch(`${BASE_URL}/${userId}`, body);
+      resolve(resp.data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+export const deleteUser = (userId: string): Promise<ResponseType> =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const resp = await http.delete(`${BASE_URL}/${userId}`);
+      resolve(resp.data);
+    } catch (error) {
+      reject(error);
+    }
+  });

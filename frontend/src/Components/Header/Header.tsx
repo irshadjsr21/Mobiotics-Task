@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import Button from "./../Button/Button";
 import AddUserModal from "./../AddUserModal/AddUserModal";
+import Button from "./../Button/Button";
 
 import User from "../../modal/User";
 
@@ -30,6 +30,7 @@ export default function Header({ onAdd }: HeaderProps) {
               setIsAddOpen(false);
             }}
             onClose={() => setIsAddOpen(false)}
+            isEditing={false}
           />
         ) : null}
       </div>
